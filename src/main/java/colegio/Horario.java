@@ -147,7 +147,8 @@ public class Horario {
     //toString
     @Override
     public String toString() {
-        return "Horario{" + "numFila=" + numFila + ", curso=" + curso + ", inicialesProfesor=" + inicialesProfesor + ", asigantura=" + asigantura + ", aula=" + aula + ", diaSemana=" + diaSemana + ", hora=" + hora + '}';
+        return numFila + ";" + curso + ";" + inicialesProfesor + ";" + asigantura
+                + ";" + aula + ";" + diaSemana + ";" + hora;
     }
 
 }

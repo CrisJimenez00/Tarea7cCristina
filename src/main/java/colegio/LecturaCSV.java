@@ -5,9 +5,15 @@
  */
 package colegio;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -44,29 +50,44 @@ public class LecturaCSV {
                 tmp.setCurso(comilla(comilla(tokens[1])));
                 tmp.setInicialesProfesor(comilla(tokens[2].substring(1, tokens[2].length() - 3)));
                 tmp.setAsigantura(comilla(tokens[3].substring(1, tokens[3].length() - 1)));
+                
                 if (!comilla(comilla(tokens[4].substring(0, tokens[4].length() - 2))).contains("  ")) {
+                    
                     tmp.setAula(comilla(comilla(tokens[4].substring(0, tokens[4].length() - 1))));
+                    
                 } else {
+                    
                     tmp.setAula("Sin aula");
+                    
                 }
 
                 //Según el número dice qué dia de la semana es
                 switch (Integer.parseInt(tokens[5])) {
+                    
                     case 1:
+                        
                         tmp.setDiaSemana("Lunes");
                         break;
+                        
                     case 2:
+                        
                         tmp.setDiaSemana("Martes");
                         break;
+                        
                     case 3:
+                        
                         tmp.setDiaSemana("Miércoles");
                         break;
+                        
                     case 4:
                         tmp.setDiaSemana("Jueves");
                         break;
+                        
                     case 5:
+                            
                         tmp.setDiaSemana("Viernes");
                         break;
+                        
                 }
 
                 //Según el número dice qué hora es
@@ -101,5 +122,39 @@ public class LecturaCSV {
 
         return listaHorario;
     }
+    
+    //Método el cual genera el fichero CSV
+    public static void escribirFicheroHorario(ArrayList<Horario> listaHorario, String clase) {
+        //Escribimos el fichero de turismos
+        String idFichero = clase + ".csv";
 
+        try (BufferedWriter flujo = new BufferedWriter(new FileWriter(idFichero))) {
+
+            for (Horario grupo : listaHorario) {
+
+                if (grupo.getCurso().contains(clase)) {
+
+                    flujo.write(grupo.toString());
+
+                    flujo.newLine();
+                }
+            }
+            // Metodo fluh() guarda cambios en disco 
+            flujo.flush();
+            System.out.println("Fichero " + idFichero + " creado correctamente.");
+            
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //Método el cual genera un fichero JSON con la lista que se le pasa por parámetros
+    public static void generarFicheroJSON(List<String> listaHoras, String idFichero) throws IOException {
+
+        ObjectMapper mapeador = new ObjectMapper();
+
+        mapeador.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+        mapeador.writeValue(new File(idFichero), listaHoras);
+    }
 }
