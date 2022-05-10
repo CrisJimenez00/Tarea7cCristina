@@ -19,8 +19,8 @@ public class Horario {
     private String inicialesProfesor;
     private String asigantura;
     private String aula;
-    private String diaSemana;
-    private String hora;
+    private String diaSemana;//Se tiene que cambiar a int
+    private String hora;//Se tiene que cambiar a int
 
     //Constructores
     //Sin parámetros

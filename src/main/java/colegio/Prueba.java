@@ -150,7 +150,7 @@ public class Prueba {
         Set<String> listaProfes = new TreeSet<>();
 
         //Lista de objetos 
-        ArrayList<Horario> listaHoras = leerFicheros("Horario.csv");
+        ArrayList<Horario> listaHoras = leerFicheros("horario.csv");
         ordenarHoraDia(listaHoras);
 
         for (Horario listaHora : listaHoras) {
